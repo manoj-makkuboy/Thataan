@@ -1,4 +1,5 @@
 from flask import Flask, request, session, g, redirect, url_for, abort, flash
+import datetime
 from flask_cors import CORS
 import os
 import sqlite3
@@ -52,17 +53,31 @@ def check_credentials(username, password):
     cur = db.execute('select password from user where username = ?', [username])
     return check_password_hash(cur.fetchone()[0], password)
 
+
 def encode_auth_token(username):
     try:
         payload = {
-            'username':username
+            'username': username,
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(days=1, seconds=5),
+            'iat': datetime.datetime.utcnow()
         }
         return jwt.encode(payload, app.config.get('SECRET_KEY'),
                           algorithm='HS256')
     except Exception as e:
         return e
 
-@app.route('/signup', methods = ['GET', 'POST'])
+
+def decode_auth_token(auth_token):
+    try:
+        payload = jwt.decode(auth_token, app.config.get('SECRET_KEY'))
+        return payload['username']
+    except jwt.InvalidTokenError:
+        return 'Invalid token'
+    except jwt.ExpiredSignatureError:
+        return 'Expired Signature'
+
+
+@app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
         db = get_db()
@@ -72,3 +87,9 @@ def signup():
         db.commit()
 
     return 'Signup successful'
+
+
+@app.route('/history')
+def get_history():
+    token = request.headers['Authorization']
+    return decode_auth_token(token[4:])
