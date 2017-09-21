@@ -5,8 +5,10 @@ import sqlite3
 import json
 import logging
 from werkzeug.security import generate_password_hash, check_password_hash
+import jwt
 
 app = Flask(__name__)
+app.debut = True
 app.config.from_object(__name__)
 CORS(app)
 
@@ -36,17 +38,29 @@ def get_db():
 def login():
     if request.method == 'POST':
         credentials_json = request.get_json(silent=True)
-        if check_credentials(credentials_json['username'],
-                             credentials_json['password']):
-            reponse_json = json.dumps({'token': 'username'})
+        username = credentials_json['username']
+        password = credentials_json['password']
+        if check_credentials(username, password):
+            reponse_json = json.dumps({'token': encode_auth_token(username).decode("utf-8")})
             return reponse_json
         return 'Invalid Credentials or Username doesn\' exits'
     return 'Valid Credentials'
 
+
 def check_credentials(username, password):
     db = get_db()
-    cur = db.execute('select password from user where  = ?', [username])
+    cur = db.execute('select password from user where username = ?', [username])
     return check_password_hash(cur.fetchone()[0], password)
+
+def encode_auth_token(username):
+    try:
+        payload = {
+            'username':username
+        }
+        return jwt.encode(payload, app.config.get('SECRET_KEY'),
+                          algorithm='HS256')
+    except Exception as e:
+        return e
 
 @app.route('/signup', methods = ['GET', 'POST'])
 def signup():
