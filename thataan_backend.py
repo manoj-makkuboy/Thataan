@@ -10,9 +10,10 @@ import jwt
 from functools import wraps
 
 app = Flask(__name__)
-app.debut = True
+app.debug = True
 app.config.from_object(__name__)
 CORS(app)
+logging.getLogger('flask_cors').level = logging.DEBUG
 
 app.config.update(dict(
     DATABASE=os.path.join(app.root_path, 'thantaan.db'),
@@ -111,8 +112,9 @@ def get_history():
 
 @app.route('/practise_data/<level_number>/')
 def get_practise_data(level_number):
-    with open('./practise_data/level_1.txt', 'r') as practise_data_file:
+    practise_data_dir = './practise_data/level_%s.txt' % level_number
+    with open(practise_data_dir, 'r') as practise_data_file:
         practise_data = ''
         for line in practise_data_file:
             practise_data += line
-    return practise_data + str(level_number)
+    return json.dumps(practise_data)
