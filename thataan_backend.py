@@ -111,4 +111,8 @@ def get_history():
 
 @app.route('/practise_data/<level_number>/')
 def get_practise_data(level_number):
-    return 'pracise data' + str(level_number)
+    with open('./practise_data/level_1.txt', 'r') as practise_data_file:
+        practise_data = ''
+        for line in practise_data_file:
+            practise_data += line
+    return practise_data + str(level_number)
