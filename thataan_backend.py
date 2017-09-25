@@ -7,6 +7,7 @@ import json
 import logging
 from werkzeug.security import generate_password_hash, check_password_hash
 import jwt
+from functools import wraps
 
 app = Flask(__name__)
 app.debut = True
@@ -42,7 +43,9 @@ def login():
         username = credentials_json['username']
         password = credentials_json['password']
         if check_credentials(username, password):
-            reponse_json = json.dumps({'token': encode_auth_token(username).decode("utf-8")})
+            reponse_json = json.dumps({'token':
+                                       encode_auth_token(username)
+                                       .decode("utf-8")})
             return reponse_json
         return 'Invalid Credentials or Username doesn\' exits'
     return 'Valid Credentials'
@@ -89,7 +92,18 @@ def signup():
     return 'Signup successful'
 
 
+def login_required(execute_after_verification):
+    @wraps(execute_after_verification)
+    def wrap(*args, **kwargs):
+        token = request.headers['Authorization']
+        if 'Invalid token' != decode_auth_token(token[4:]):
+            return execute_after_verification(*args, **kwargs)
+        else:
+            return 'please login'
+    return wrap
+
+
 @app.route('/history')
+@login_required
 def get_history():
-    token = request.headers['Authorization']
-    return decode_auth_token(token[4:])
+    return 'inside history'  # slicing prefix to token
