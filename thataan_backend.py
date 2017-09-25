@@ -107,3 +107,8 @@ def login_required(execute_after_verification):
 @login_required
 def get_history():
     return 'inside history'  # slicing prefix to token
+
+
+@app.route('/practise_data/<level_number>/')
+def get_practise_data(level_number):
+    return 'pracise data' + str(level_number)
