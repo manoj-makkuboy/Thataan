@@ -55,7 +55,10 @@ def login():
 def check_credentials(username, password):
     db = get_db()
     cur = db.execute('select password from user where username = ?', [username])
-    return check_password_hash(cur.fetchone()[0], password)
+    cur_value = cur.fetchone()
+    if cur_value:
+        return check_password_hash(cur_value[0], password)
+    return False
 
 
 def encode_auth_token(username):
