@@ -8,18 +8,32 @@ import logging
 from werkzeug.security import generate_password_hash, check_password_hash
 import jwt
 from functools import wraps
+from os import environ, path
+from flask import Flask, render_template, send_from_directory
+from flask_webpack import Webpack
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="./static/dist", template_folder="./static")
 app.debug = True
 app.config.from_object(__name__)
 CORS(app)
-logging.getLogger('flask_cors').level = logging.DEBUG
+
+here = path.abspath(path.dirname(__name__))
+
+# webpack = Webpack()
+# app.config["WEBPACK_MANIFEST_PATH"] = path.join(here, "manifest.json")
+# webpack.init_app(app)
+
+@app.route("/")
+def index():
+    return render_template("index.html")
 
 app.config.update(dict(
     DATABASE=os.path.join(app.root_path, 'thantaan.db'),
     SECRET_KEY='DEV KEY'
     ))
 app.config.from_envvar('THATAAN_SETTINGS', silent=True)
+
+
 
 
 def connect_db():
@@ -121,3 +135,7 @@ def get_practise_data(level_number):
         for line in practise_data_file:
             practise_data += line
     return json.dumps(practise_data)
+
+
+if __name__ == "__main__":
+    app.run(extra_files=[app.config["WEBPACK_MANIFEST_PATH"]])
