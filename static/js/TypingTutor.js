@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import KeyBoard from './KeyBoard'
+import KeyBoardv2 from './KeyBoardv2'
 
 class TypingTutor extends Component {
   constructor () {
@@ -116,7 +117,7 @@ class TypingTutor extends Component {
         <br />
         <br />
       <div >
-        <KeyBoard  pressedKey={this.state.practiseText[this.state.userTypedText.length]} />
+        <KeyBoardv2  pressedKey={this.state.practiseText[this.state.userTypedText.length]} />
 	    </div>
       </div>
     )
