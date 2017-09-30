@@ -27,12 +27,10 @@ const Account = function () {
 const MainTab = () => (
   <div> 
     <nav>
-      <Link to="/account"> Account </Link>
-      <Link to="/practise"> Practise </Link>
+      <Link to="/"> Practise </Link>
     </nav>
     <div>
-      <Route path="/account" component={Account}/> 
-      <Route path="/practise" component={TypingTutor}/> 
+      <Route path="/" component={TypingTutor}/> 
     </div>
   </div>
   )

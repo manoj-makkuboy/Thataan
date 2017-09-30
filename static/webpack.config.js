@@ -14,7 +14,14 @@ const config = {
         {
           test: /\.jsx?/,
           exclude: /node_modules/,
-          use: 'babel-loader'
+	  use: {
+	    loader: 'babel-loader',
+	    options: {
+		    presets: ['env', 'react'],
+		    plugins: ['transform-runtime']
+
+	    }
+       	}
 	},
       {
         test: /\.css$/,

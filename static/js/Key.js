@@ -1,26 +1,28 @@
 import React, { Component } from 'react'
+let keyCss = {
+      width: '30px',
+      height: '30px',
+	    //      background: `${(this.state.isPressed ? 'blue' : 'grey')}`,
+      textAlign: 'center'
+    }
+
+Object.defineProperty( keyCss, 'background', {value: 'grey', writable: true} ) 
+Object.defineProperty( keyCss, 'textDecoration', {value: 'none', writable: true} ) 
 
 class Key extends Component {
   constructor () {
     super()
     this.state = {isPressed: false}
-    this.keyCss = {
-      width: '30px',
-      height: '30px',
-      background: `${(this.state.isPressed ? 'blue' : 'grey')}`,
-      textAlign: 'center',
-      textDecoration: 'none'
-    }
     this.aliasMap = { 'ஆ': 'ா', 'ஔ': 'ௌ', 'ஈ':'ீ', 'இ': 'ி' , 'ஓ': 'ோ', 'ஊ': 'ூ', 'உ': 'ு', 'ஒ': 'ொ', 'ஐ': 'ை', 'எ': 'ெ', 'ஏ': 'ே'}
   }
 
   render () {
-    this.keyCss['background'] = `${(this.state.isPressed ? 'blue' : 'grey')}`
+    keyCss['background'] = `${(this.state.isPressed ? 'blue' : 'grey')}`
     if (this.props.doesContainPressedKey) {
-      this.keyCss['textDecoration'] = 'underline'
-    } else { this.keyCss['textDecoration'] = 'none' }
+      keyCss['textDecoration'] = 'underline'
+    } else { keyCss['textDecoration'] = 'none' }
     return (
-      <div id='key' name={this.props.keyName} style={this.keyCss} > {this.props.keyName} </ div>
+      <div id='key' name={this.props.keyName} style={this.keyCss} > {this.props.keyName} </div>
     )
   }
 

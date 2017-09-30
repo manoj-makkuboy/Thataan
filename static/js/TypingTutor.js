@@ -13,7 +13,7 @@ class TypingTutor extends Component {
   }
 
   setUpKeymanInUserText () {
-	  /*	
+	
     var kmw = require('./static/js/keyman/keymanweb')
  
     window.addEventListener('load', function () {
@@ -31,7 +31,6 @@ class TypingTutor extends Component {
     },
     filename:require('./tamil99.js')}); // A valid path to the compiled *.js file representing the keyboard. 
     });
-    */
   }
 
   handleInputChangeUserTypedText (e) {
@@ -88,7 +87,7 @@ class TypingTutor extends Component {
 
   componentWillMount() { 
    console.log('componentWillMount') 
-	this.setUpKeymanInUserText ()
+	  //	this.setUpKeymanInUserText ()
 }
   render () {
     return (
