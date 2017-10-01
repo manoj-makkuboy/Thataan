@@ -1,8 +1,41 @@
 import React, { Component } from 'react'
 import './KeyBoardv2.css'
 
+const keyMap = {
+  'a': 'c65',
+  's': 'c83',
+  'd': 'c68'
+}
 class KeyBoardv2 extends Component {
+  constructor() {
+    super()
+    this.state = {keyToPress: ''}
+  }
   
+  componentDidMount () {
+  
+	  //	this.setState({keyToPress: 'c81'})
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.pressedKey !== this.props.pressedKey) {
+      console.log(nextProps.pressedKey)
+	    // reset old pressed key 
+      try {
+        let keyToReset = window.document.getElementsByClassName(keyMap[this.props.pressedKey])
+        keyToReset[0].removeAttribute('style'); 
+      } catch (e) {
+       console.log(e) 
+      }
+	    // mark new pressed key 
+      let keyToPress = window.document.getElementsByClassName(keyMap[nextProps.pressedKey])
+	  console.log('keyTopress')
+	  console.log(keyToPress)
+      keyToPress[0].setAttribute('style','background: #34f3cf;'); 
+      this.setState = {keyToPress: keyMap[nextProps.pressedKey]}
+    }
+  }
+
   render() {
 	  return(
 <div id="keyboard">
@@ -57,8 +90,8 @@ class KeyBoardv2 extends Component {
         <ul className="cf" id="asdfg">
 	    	<li><a href="#" className="key c20 alt" id="caps"><b></b><span>caps lock</span></a></li>
 	    	<li><a href="#" className="key c65"><span>a</span></a></li>
-	    	<li><a href="#" className="key c83"><span>s</span></a></li>
-	    	<li><a href="#" className="key c68"><span>d</span></a></li>
+	    	<li><a href="#" className="key c83" ><span>s</span></a></li>
+	    	<li><a href="#" className="key c68" ><span>d</span></a></li>
 	    	<li><a href="#" className="key c70"><span>f</span></a></li>
 	    	<li><a href="#" className="key c71"><span>g</span></a></li>
 	    	<li><a href="#" className="key c72"><span>h</span></a></li>
