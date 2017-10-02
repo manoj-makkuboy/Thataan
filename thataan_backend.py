@@ -138,4 +138,4 @@ def get_practise_data(level_number):
 
 
 if __name__ == "__main__":
-    app.run(extra_files=[app.config["WEBPACK_MANIFEST_PATH"]])
+    app.run(threaded=True)

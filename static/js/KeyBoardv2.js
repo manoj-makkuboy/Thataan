@@ -1,20 +1,63 @@
 import React, { Component } from 'react'
 import './KeyBoardv2.css'
 
-const keyMap = {
-  'a': 'c65',
-  's': 'c83',
-  'd': 'c68'
+function getKeyId (inputLetter) {
+  let keyMap = {
+// qwerty row
+'c81': ['ஆ', 'ா', 'ஸ'],
+'c87':['ஈ', 'ா', 'ஸ'],
+'c69':['ஊ', 'ீ', 'ஸ'],
+'c82':['ஐ',' ூ', 'ஸ'],
+'c84':['ஏ',' ை', 'ஸ'],
+'c89':['ள',' ே', 'ஸ'],
+'c85':['ற', 'ஸ'],
+'c73':['ன', 'ஸ'],
+'c79':['ட', 'ஸ'],
+'c80':['ண', 'ஸ'],
+'c219':['ச', 'ஸ'],
+'c221':['ஞ', 'ஸ'],
+	  // asdfg row 
+'c65':['அ','',''],
+'c83':['இ','',''],
+'c68':['உ','',''],
+'c70':['்',,'',''],
+'c71':['எ','',''],
+'c72':['க','',''],
+'c74':['ப','',''],
+'c75':['ம','',''],
+'c76':['த','',''],
+'c186':['ந','',''],
+'c222':['ய','',''],
+	  // zxcvb row
+         'c90':['ஔ','',''],
+         'c88':['ஓ','',''],
+         'c67':['ஒ','',''],
+         'c86':['வ','',''],
+         'c66':['ங','',''],
+         'c78':['ல','',''],
+         'c77':['ர','',''],
+         'c188':[',','',''],
+         'c190':['.','',''],
+	  'c191':['/','',''],
+         'c16' :['','','']
+
+  }
+  for (let key in keyMap) {
+    if (keyMap[key].includes(inputLetter)) {
+      return key  
+    }
+  }
+  return keyMap[inputLetter]
 }
+
 class KeyBoardv2 extends Component {
   constructor() {
     super()
-    this.state = {keyToPress: ''}
+    this.state = {keyIdToPress: ''}
   }
   
   componentDidMount () {
-  
-	  //	this.setState({keyToPress: 'c81'})
+      
   }
 
   componentWillReceiveProps (nextProps) {
@@ -22,17 +65,17 @@ class KeyBoardv2 extends Component {
       console.log(nextProps.pressedKey)
 	    // reset old pressed key 
       try {
-        let keyToReset = window.document.getElementsByClassName(keyMap[this.props.pressedKey])
+        let keyToReset = window.document.getElementsByClassName(getKeyId(this.props.pressedKey))
         keyToReset[0].removeAttribute('style'); 
       } catch (e) {
-       console.log(e) 
+       console.log('no keys pressed to revert highlight') 
       }
 	    // mark new pressed key 
-      let keyToPress = window.document.getElementsByClassName(keyMap[nextProps.pressedKey])
+      let keyIdToPress = window.document.getElementsByClassName(getKeyId(nextProps.pressedKey))
 	  console.log('keyTopress')
-	  console.log(keyToPress)
-      keyToPress[0].setAttribute('style','background: #34f3cf;'); 
-      this.setState = {keyToPress: keyMap[nextProps.pressedKey]}
+	  console.log(keyIdToPress)
+      keyIdToPress[0].setAttribute('style','background: #34f3cf;'); 
+      this.setState = {keyIdToPress: getKeyId(nextProps.pressedKey)}
     }
   }
 
