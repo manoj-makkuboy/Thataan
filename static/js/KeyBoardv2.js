@@ -8,40 +8,40 @@ const keyMap = {
 	  'c13':{[currentKeyboard]: [['\n'],[]]},
 // qwerty row
 'c81':{english: ['q'], tamil: [['ஆ', 'ா'],['ஸ']]},
-'c87':{tamil: [['ஈ', 'ீ'],['ஷ']]},
-'c69':{tamil: [['ஊ', ' ூ'],['ஜ']]},
-'c82':{tamil: [['ஐ','ை'],['ஹ']]},
-'c84':{tamil: [['ஏ',' ே'],['க்ஷ']]},
-'c89':{tamil: [['ள','', ''],['ஶ்ரீ']]},
-'c85':{tamil: [['ற','', ''],['ஶ']]},
-'c73':{tamil: [['ன', ''],[':']]},
-'c79':{tamil: [['ட', ''],['[']]},
-'c80':{tamil: [['ண', ''],[']']]},
-'c219':{tamil: [['ச', ''],['{']]},
-'c221':{tamil: [['ஞ', ''],['}']]},
+'c87':{english: ['w'],tamil: [['ஈ', 'ீ'],['ஷ']]},
+'c69':{english: ['e'],tamil: [['ஊ', ' ூ'],['ஜ']]},
+'c82':{english: ['r'],tamil: [['ஐ','ை'],['ஹ']]},
+'c84':{english: ['t'],tamil: [['ஏ',' ே'],['க்ஷ']]},
+'c89':{english: ['y'],tamil: [['ள','', ''],['ஶ்ரீ']]},
+'c85':{english: ['u'],tamil: [['ற','', ''],['ஶ']]},
+'c73':{english: ['i'],tamil: [['ன', ''],[':']]},
+'c79':{english: ['o'],tamil: [['ட', ''],['[']]},
+'c80':{english: ['p'],tamil: [['ண', ''],[']']]},
+'c219':{english: ['['],tamil: [['ச', ''],['{']]},
+'c221':{english: [']'],tamil: [['ஞ', ''],['}']]},
 	  // asdfg row 
-'c65':{tamil: [['அ','',''],['௹']]},
-'c83':{tamil: [['இ','ி',''],['௺']]},
-'c68':{tamil: [['உ','ு',''],['௸']]},
-'c70':{tamil: [['்',''],['ஃ']]},
-'c71':{tamil: [['எ','ெ',''],['']]},
-'c72':{tamil: [['க'],['']]},
-'c74':{tamil: [['ப','',''],['']]},
-'c75':{tamil: [['ம','',''],['']]},
-'c76':{tamil: [['த','',''],['']]},
-'c186':{tamil: [['ந','',''],['']]},
-'c222':{tamil: [['ய','',''],['']]},
+'c65':{english: ['a'],tamil: [['அ','',''],['௹']]},
+'c83':{english: ['s'],tamil: [['இ','ி',''],['௺']]},
+'c68':{english: ['d'],tamil: [['உ','ு',''],['௸']]},
+'c70':{english: ['f'],tamil: [['்',''],['ஃ']]},
+'c71':{english: ['g'],tamil: [['எ','ெ',''],['']]},
+'c72':{english: ['h'],tamil: [['க'],['']]},
+'c74':{english: ['j'],tamil: [['ப','',''],['']]},
+'c75':{english: ['k'],tamil: [['ம','',''],['']]},
+'c76':{english: ['l'],tamil: [['த','',''],['']]},
+'c186':{english: [';'],tamil: [['ந','',''],['']]},
+'c222':{english: ['\''],tamil: [['ய','',''],['']]},
 	  // zxcvb row
-         'c90':{tamil: [['ஔ','ௌ',''],['௳']]},
-         'c88':{tamil: [['ஓ','ோ',''],['௴']]},
-         'c67':{tamil: [['ஒ','ொ',''],['௵']]},
-         'c86':{tamil: [['வ','',''],['௶']]},
-         'c66':{tamil: [['ங','',''],['௷']]},
-         'c78':{tamil: [['ல','',''],['ௐ']]},
-         'c77':{tamil: [['ர','',''],['/']]},
-         'c188':{tamil: [[',','',''],['']]},
-         'c190':{tamil: [['.','',''],['']]},
-	  'c191':{tamil: [['ழ','',''],['?']]}
+         'c90':{english: ['z'],tamil: [['ஔ','ௌ',''],['௳']]},
+         'c88':{english: ['x'],tamil: [['ஓ','ோ',''],['௴']]},
+         'c67':{english: ['c'],tamil: [['ஒ','ொ',''],['௵']]},
+         'c86':{english: ['v'],tamil: [['வ','',''],['௶']]},
+         'c66':{english: ['b'],tamil: [['ங','',''],['௷']]},
+         'c78':{english: ['n'],tamil: [['ல','',''],['ௐ']]},
+         'c77':{english: ['m'],tamil: [['ர','',''],['/']]},
+         'c188':{english: [','],tamil: [[',','',''],['']]},
+         'c190':{english: ['.'],tamil: [['.','',''],['']]},
+	  'c191':{english: ['/'],tamil: [['ழ','',''],['?']]}
 	  //   'c16' :[['','',''],['']]
 
 }
@@ -64,9 +64,6 @@ class KeyBoardv2 extends Component {
     this.state = {keyIdToPress: ''}
   }
   
-  componentDidMount () {
-      
-  }
 
   componentWillReceiveProps (nextProps) {
     if (nextProps.pressedKey !== this.props.pressedKey) {
@@ -89,6 +86,23 @@ class KeyBoardv2 extends Component {
   }
 
   render() {
+	 let qwertyKeyIds = ['c81','c87','c69','c82','c84','c89','c85','c73','c79','c80', 'c219','c221']
+	let renderedQwertyKeys = qwertyKeyIds.map((keyId, index) => {
+	    return  (<li><a   className={"key "+ keyId}><span>{keyMap[keyId]['english'][0][0]}</span><span>{keyMap[keyId][currentKeyboard][0][0]}</span></a></li>  )
+	  })
+
+	 let asdfgKeyIds = ["c65", "c83", "c68", "c70", "c71", "c72", "c74", "c75", "c76", "c186", "c222"]
+	let renderedAsdfgKeys = asdfgKeyIds.map((keyId, index) => {
+	    return  (<li><a   className={"key "+ keyId}><span>{keyMap[keyId]['english'][0][0]}</span><span>{keyMap[keyId][currentKeyboard][0][0]}</span></a></li>  )
+	  })
+
+
+	 let zxcvbKeyIds = ['c90', 'c88', 'c67', 'c86', 'c66', 'c78', 'c77', 'c188', 'c190', 'c191'] 
+
+	let renderedZxcvbKeys = zxcvbKeyIds.map((keyId, index) => {
+	    return  (<li><a   className={"key "+ keyId}><span>{keyMap[keyId]['english'][0][0]}</span><span>{keyMap[keyId][currentKeyboard][0][0]}</span></a></li>  )
+	  })
+
 	  return(
 <div id="keyboard">
     	<ul className="cf">
@@ -125,47 +139,17 @@ class KeyBoardv2 extends Component {
         </ul>
     	<ul className="cf" id="qwerty">
 	    	<li><a   className="key c9" id="tab"><span>tab</span></a></li>
-		<li><a   className="key c81"><span>q</span><span>{keyMap.c81[currentKeyboard][0][0]}</span></a></li>
-	    	<li><a   className="key c87"><span>w</span><span>{keyMap.c87[currentKeyboard][0][0]}</span></a></li>
-	    	<li><a   className="key c69"><span>e</span><span>{keyMap.c69[currentKeyboard][0][0]}</span></a></li>
-	    	<li><a   className="key c82"><span>r</span><span>{keyMap.c82[currentKeyboard][0][0]}</span></a></li>
-	    	<li><a   className="key c84"><span>t</span><span>{keyMap.c84[currentKeyboard][0][0]}</span></a></li>
-	    	<li><a   className="key c89"><span>y</span><span>{keyMap.c89[currentKeyboard][0][0]}</span></a></li>
-	    	<li><a   className="key c85"><span>u</span><span>{keyMap.c81[currentKeyboard][0][0]}</span></a></li>
-	    	<li><a   className="key c73"><span>i</span><span>{keyMap.c85[currentKeyboard][0][0]}</span></a></li>
-	    	<li><a   className="key c79"><span>o</span><span>{keyMap.c79[currentKeyboard][0][0]}</span></a></li>
-	    	<li><a   className="key c80"><span>p</span><span>{keyMap.c80[currentKeyboard][0][0]}</span></a></li>
-	    	<li><a   className="key c219 alt"><b>{'{'}</b><span>{keyMap.c80[currentKeyboard][0][0]}</span></a></li>
-	    	<li><a   className="key c221 alt"><b>{'}'}</b><span>{keyMap.c80[currentKeyboard][0][0]}</span></a></li>
-	    	<li><a   className="key c220 alt"><b>|</b><span>\</span></a></li>
+		{renderedQwertyKeys}
+	    	<li><a   className="key c220"><b>|</b><span>\</span></a></li>
         </ul>
         <ul className="cf" id="asdfg">
 	    	<li><a   className="key c20 alt" id="caps"><b></b><span>caps lock</span></a></li>
-	    	<li><a   className="key c65"><span>a</span><span>{keyMap.c65[currentKeyboard][0][0]}</span></a></li>
-	    	<li><a   className="key c83" ><span>s</span><span>{keyMap.c83[currentKeyboard][0][0]}</span></a></li>
-	    	<li><a   className="key c68" ><span>d</span><span>{keyMap.c68[currentKeyboard][0][0]}</span></a></li>
-	    	<li><a   className="key c70"><span>f</span><span>{keyMap.c70[currentKeyboard][0][0]}</span></a></li>
-	    	<li><a   className="key c71"><span>g</span><span>{keyMap.c71[currentKeyboard][0][0]}</span></a></li>
-	    	<li><a   className="key c72"><span>h</span><span>{keyMap.c72[currentKeyboard][0][0]}</span></a></li>
-	    	<li><a   className="key c74"><span>j</span><span>{keyMap.c74[currentKeyboard][0][0]}</span></a></li>
-	    	<li><a   className="key c75"><span>k</span><span>{keyMap.c75[currentKeyboard][0][0]}</span></a></li>
-	    	<li><a   className="key c76"><span>l</span><span>{keyMap.c76[currentKeyboard][0][0]}</span></a></li>
-	    	<li><a   className="key c186 alt"><span>;</span><span>{keyMap.c186[currentKeyboard][0][0]}</span></a></li>
-	    	<li><a   className="key c222 alt"><span>'</span><span>{keyMap.c222[currentKeyboard][0][0]}</span></a></li>
+		{renderedAsdfgKeys}
 	    	<li><a   className="key c13 alt" id="enter"><span>return</span></a></li>
         </ul>
         <ul className="cf" id="zxcvb">
 	    	<li><a   className="key c16 shiftleft"><span>Shift</span></a></li>
-	    	<li><a   className="key c90"><span>z</span><span>{keyMap.c90[currentKeyboard][0][0]}</span></a></li>
-	    	<li><a   className="key c88"><span>x</span><span>{keyMap.c88[currentKeyboard][0][0]}</span></a></li>
-	    	<li><a   className="key c67"><span>c</span><span>{keyMap.c67[currentKeyboard][0][0]}</span></a></li>
-	    	<li><a   className="key c86"><span>v</span><span>{keyMap.c86[currentKeyboard][0][0]}</span></a></li>
-	    	<li><a   className="key c66"><span>b</span><span>{keyMap.c66[currentKeyboard][0][0]}</span></a></li>
-	    	<li><a   className="key c78"><span>n</span><span>{keyMap.c78[currentKeyboard][0][0]}</span></a></li>
-	    	<li><a   className="key c77"><span>m</span><span>{keyMap.c77[currentKeyboard][0][0]}</span></a></li>
-	    	<li><a   className="key c188 alt"><span>{keyMap.c188[currentKeyboard][0][0]}</span></a></li>
-	    	<li><a   className="key c190 alt"><span>{keyMap.c190[currentKeyboard][0][0]}</span></a></li>
-	    	<li><a   className="key c191 alt"><span>{keyMap.c191[currentKeyboard][0][0]}</span></a></li>
+		  {renderedZxcvbKeys}
 	    	<li><a   className="key c16 shiftright"><span>Shift</span></a></li>
         </ul>
 <ul className="cf" id="bottomrow">
