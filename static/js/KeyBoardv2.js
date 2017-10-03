@@ -46,46 +46,54 @@ const keyMap = {
 
 }
 
-function getKeyId (inputLetter, language) {
+function getKeyIdAndLayer (inputLetter, language) {
   for (let key in keyMap) {
     if (keyMap[key][language][0].includes(inputLetter)) { // check layer 0 of language
-      return key  
+      return {'keyId': key, 'layerId': 0}  
     }
     if (keyMap[key][language][1].includes(inputLetter)) { // check inputLetter in layer 1 of language
-      return key  
+      return {'keyId': key, 'layerId': 1}  
     }
   }
   return keyMap[inputLetter]
 }
 
 function removeHighlight (keyIdToRemoveHightlight) {
-        let elementToReset = window.document.getElementsByClassName(keyIdToRemoveHightlight)
-        elementToReset[0].removeAttribute('style'); 
+  let elementToReset = window.document.getElementsByClassName(keyIdToRemoveHightlight)
+  let elementsArray = Array.from(elementToReset) // make array out of html collection	
+  elementsArray.map((element) => {element.removeAttribute('style')})
 }
 
 function addHighlight (keyIdToAddHightlight) {
-      let elementToHighlight = window.document.getElementsByClassName(keyIdToAddHightlight)
-      elementToHighlight[0].setAttribute('style','background: #34f3cf;'); 
+  let elementToHighlight = window.document.getElementsByClassName(keyIdToAddHightlight)
+  let elementsArray = Array.from(elementToHighlight) // make array out of html collection	
+  elementsArray.map((element) => {element.setAttribute('style','background: #34f3cf;');})
 }
 
 class KeyBoardv2 extends Component {
   constructor() {
     super()
-    this.state = {keyIdToPress: ''}
+	  this.state = {keyIdToPress: '', keyboardLayerId: 0} // default layer 0, shift layer is 1 
   }
   
 
   componentWillReceiveProps (nextProps) {
     if (nextProps.pressedKey !== this.props.pressedKey) {
       try {
-        let keyIdToRemoveHightlight = getKeyId(this.props.pressedKey, currentKeyboard)
-	removeHighlight (keyIdToRemoveHightlight)
+        let keyIdAndLayerToRemoveHightlight = getKeyIdAndLayer(this.props.pressedKey, currentKeyboard)
+	removeHighlight (keyIdAndLayerToRemoveHightlight['keyId'])
       } catch (e) {
-       console.log('no keys pressed to revert highlight') 
+       console.log('no keys pressed to revert highlight',e) 
       }
-      let keyIdToAddHighlight = getKeyId(nextProps.pressedKey, currentKeyboard)
-      addHighlight(keyIdToAddHighlight)
-      this.setState = {keyIdToPress: getKeyId(nextProps.pressedKey, currentKeyboard)}
+      let keyIdAndLayerToAddHighlight = getKeyIdAndLayer(nextProps.pressedKey, currentKeyboard)
+      addHighlight(keyIdAndLayerToAddHighlight['keyId'])
+      
+      if (keyIdAndLayerToAddHighlight['layerId']) { // If layerId is not 0 highlight shift
+	addHighlight('c16')	// c16 - keyId of shift	
+      } else {
+        removeHighlight('c16') 
+      }
+      this.setState({keyIdToPress: keyIdAndLayerToAddHighlight['keyId'], keyboardLayerId: keyIdAndLayerToAddHighlight['layerId']})
     }
   }
 
