@@ -51,11 +51,21 @@ function getKeyId (inputLetter, language) {
     if (keyMap[key][language][0].includes(inputLetter)) { // check layer 0 of language
       return key  
     }
-    if (keyMap[key][language][1].includes(inputLetter)) {
+    if (keyMap[key][language][1].includes(inputLetter)) { // check inputLetter in layer 1 of language
       return key  
     }
   }
   return keyMap[inputLetter]
+}
+
+function removeHighlight (keyIdToRemoveHightlight) {
+        let elementToReset = window.document.getElementsByClassName(keyIdToRemoveHightlight)
+        elementToReset[0].removeAttribute('style'); 
+}
+
+function addHighlight (keyIdToAddHightlight) {
+      let elementToHighlight = window.document.getElementsByClassName(keyIdToAddHightlight)
+      elementToHighlight[0].setAttribute('style','background: #34f3cf;'); 
 }
 
 class KeyBoardv2 extends Component {
@@ -67,20 +77,14 @@ class KeyBoardv2 extends Component {
 
   componentWillReceiveProps (nextProps) {
     if (nextProps.pressedKey !== this.props.pressedKey) {
-      console.log(nextProps.pressedKey)
-	    // reset old pressed key 
       try {
-        let keyToReset = window.document.getElementsByClassName(getKeyId(this.props.pressedKey, currentKeyboard))
-        keyToReset[0].removeAttribute('style'); 
+        let keyIdToRemoveHightlight = getKeyId(this.props.pressedKey, currentKeyboard)
+	removeHighlight (keyIdToRemoveHightlight)
       } catch (e) {
        console.log('no keys pressed to revert highlight') 
       }
-	    // mark new pressed key 
-      
-      let keyIdToPress = window.document.getElementsByClassName(getKeyId(nextProps.pressedKey, currentKeyboard))
-	  console.log('keyTopress')
-	  console.log(keyIdToPress)
-      keyIdToPress[0].setAttribute('style','background: #34f3cf;'); 
+      let keyIdToAddHighlight = getKeyId(nextProps.pressedKey, currentKeyboard)
+      addHighlight(keyIdToAddHighlight)
       this.setState = {keyIdToPress: getKeyId(nextProps.pressedKey, currentKeyboard)}
     }
   }
