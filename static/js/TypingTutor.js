@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import KeyBoard from './KeyBoard'
 import KeyBoardv2 from './KeyBoardv2'
+import './TypingTutor.css'
 
 class TypingTutor extends Component {
   constructor () {
@@ -74,13 +75,16 @@ class TypingTutor extends Component {
     let practiseCharactersArray = practiseText.split('')
     practiseCharactersArray = practiseCharactersArray.map((v, i, a) => {
       if (mismatchIndex.includes(i)) {
-        return <mark>{v}</mark>
+        return <span style={{color: "red"}}>{v}</span>
       }
       else if (i <= compareIndex) {
-        return <u>{a[i]}</u>
+        return <span style={{color: "black"}}>{a[i]}</span>
+      }
+      else if (i === compareIndex+1) {
+	return <span style={{backgroundColor: "yellow"}}> {a[i]} </span>
       }
       else {
-        return a[i]
+	return <span style={{color: "grey"}}> {a[i]} </span>
       }
     })
     return (practiseCharactersArray)
@@ -92,7 +96,7 @@ class TypingTutor extends Component {
 }
   render () {
     return (
-      <div>
+      <div id='typingTutor'>
 	<label> Level </label>
 	    <select value={this.state.level} onChange={this.handleLevelChange}>
 		   
@@ -103,22 +107,31 @@ class TypingTutor extends Component {
 	    </select>
 	<br />
 	
-
         <label> Practise Text:  </label>
         <br />
-        <div>
+
+        <div id='practiseTextUnrendered'>
           {this.highlightTypedLetters(this.state.practiseText, this.mismatchIndex, this.compareIndex)}
         </div>
+	<br />
 	<hr />
+
         <div>
-          {this.state.practiseText}
-        </div>
-        <input id='userText' style={{ width: '350px' }} type='text' name='userTypedText' value={this.state.userTypedText} onChange={this.handleInputChangeUserTypedText} onKeyUp={this.handleOnKeyDown} />
+          <div id='practiseTextRendered'>
+            {this.state.practiseText}
+          </div>
+	</div>
+
+	<div id='userTextDiv'>
+        <input placeholder='Type Here' id='userText'  type='text' name='userTypedText' value={this.state.userTypedText} onChange={this.handleInputChangeUserTypedText} onKeyUp={this.handleOnKeyDown} />
+	<br />
+	</div>
+
         <br />
         <br />
-      <div >
+      <div>
         <KeyBoardv2  pressedKey={this.state.practiseText[this.state.userTypedText.length]} />
-	    </div>
+      </div>
       </div>
     )
   }

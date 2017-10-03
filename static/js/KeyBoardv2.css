@@ -17,14 +17,15 @@
  */
 #keyboard {
     /*margin: 15px auto 0;*/
-    margin-left: 15px;
+  /*  margin-left: 0px; */
     left: 0;
-    width: 784px;
-    /*padding: 10px 0 0 10px;*/
+   width: 784px;
+   /*padding: 10px 0 0 10px;*/
     background: #f3f3f3;
     /*left: 50%;*/
     /*transform:translateX(250px);*/
     /*display: none;*/
+    margin: auto;
 }
 
 ul {list-style-type: none; width: 784px; margin: 0 auto;}
