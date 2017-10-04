@@ -11,7 +11,7 @@ const keyMap = {
 'c87':{english: ['w'],tamil: [['ஈ', 'ீ'],['ஷ']]},
 'c69':{english: ['e'],tamil: [['ஊ', ' ூ'],['ஜ']]},
 'c82':{english: ['r'],tamil: [['ஐ','ை'],['ஹ']]},
-'c84':{english: ['t'],tamil: [['ஏ',' ே'],['க்ஷ']]},
+'c84':{english: ['t'],tamil: [['ஏ','ே'],['க்ஷ']]},
 'c89':{english: ['y'],tamil: [['ள','', ''],['ஶ்ரீ']]},
 'c85':{english: ['u'],tamil: [['ற','', ''],['ஶ']]},
 'c73':{english: ['i'],tamil: [['ன', ''],[':']]},
@@ -78,6 +78,7 @@ class KeyBoardv2 extends Component {
   
 
   componentWillReceiveProps (nextProps) {
+    console.log(nextProps.pressedKey) 
     if (nextProps.pressedKey !== this.props.pressedKey) {
       try {
         let keyIdAndLayerToRemoveHightlight = getKeyIdAndLayer(this.props.pressedKey, currentKeyboard)
@@ -85,9 +86,12 @@ class KeyBoardv2 extends Component {
       } catch (e) {
        console.log('no keys pressed to revert highlight',e) 
       }
-      let keyIdAndLayerToAddHighlight = getKeyIdAndLayer(nextProps.pressedKey, currentKeyboard)
-      addHighlight(keyIdAndLayerToAddHighlight['keyId'])
-      
+	    if (nextProps.pressedKey === undefined) { // return if undefined value is got in props
+	      return 
+      } 
+        let keyIdAndLayerToAddHighlight = getKeyIdAndLayer(nextProps.pressedKey, currentKeyboard)
+        addHighlight(keyIdAndLayerToAddHighlight['keyId'])
+       
       if (keyIdAndLayerToAddHighlight['layerId']) { // If layerId is not 0 highlight shift
 	addHighlight('c16')	// c16 - keyId of shift	
       } else {

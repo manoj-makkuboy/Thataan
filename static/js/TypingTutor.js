@@ -10,7 +10,6 @@ class TypingTutor extends Component {
     this.handleOnKeyDown = this.handleOnKeyDown.bind(this)
     this.handleLevelChange = this.handleLevelChange.bind(this)
     this.state = { practiseText: '', userTypedText: '', level: '', practiseTextHighlighted : [] }
-    this.mismatchIndex = []
     this.compareIndex = -1
     this.practiseData = [] 
     this.currentPractiseLine = 0
@@ -43,7 +42,6 @@ class TypingTutor extends Component {
   }
 
   handleLevelChange (e) {
-    this.mismatchIndex = []
     this.compareIndex = -1
 
     let userInput = e.target.value
@@ -70,7 +68,11 @@ class TypingTutor extends Component {
     this.highlightTypedLetters(this.compareIndex, userTypedTextInput, this.state.practiseText)
 	
     if (this.isEndOfPractiseText (userTypedTextInput, this.state.practiseText)) {
-      this.setState({practiseText:this.practiseData[1], userTypedText: ''}) 
+	   this.currentPractiseLine += 1 
+	    this.setState({practiseText:this.practiseData[this.currentPractiseLine],
+		    userTypedText: '',
+		    practiseTextHighlighted: this.greyOutString(this.practiseData[this.currentPractiseLine]) } ) 
+      this.compareIndex = -1
     }
           
   }
@@ -90,7 +92,6 @@ class TypingTutor extends Component {
    
   }
   highlightTypedLetters (compareIndex, userTypedText, practiseText) {
-    console.log(compareIndex,this.compareIndex,this.state.practiseText[compareIndex],userTypedText)
     let practiseCharactersArray = this.state.practiseTextHighlighted 
     practiseCharactersArray[compareIndex + 2] = <span style={{color: "grey"}}> {this.state.practiseText[compareIndex + 2]} </span>
     practiseCharactersArray[compareIndex + 1] = <span style={{backgroundColor: "yellow"}}> {this.state.practiseText[compareIndex + 1]} </span>
