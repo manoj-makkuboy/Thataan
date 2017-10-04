@@ -9,7 +9,7 @@ class TypingTutor extends Component {
     this.handleInputChangeUserTypedText = this.handleInputChangeUserTypedText.bind(this)
     this.handleOnKeyDown = this.handleOnKeyDown.bind(this)
     this.handleLevelChange = this.handleLevelChange.bind(this)
-    this.state = { practiseText: '', userTypedText: '', level: '' }
+    this.state = { practiseText: '', userTypedText: '', level: '', practiseTextHighlighted : [] }
     this.mismatchIndex = []
     this.compareIndex = -1
   }
@@ -38,6 +38,7 @@ class TypingTutor extends Component {
   handleInputChangeUserTypedText (e) {
     let userTypedTextInput = e.target.value
     this.setState({ userTypedText: userTypedTextInput })
+	  console.log('onchange')
   }
 
   handleLevelChange (e) {
@@ -52,42 +53,41 @@ class TypingTutor extends Component {
       'Content-type': 'application/json'
     }})
 	  .then((response) => response.json())
-	  .then((responseJson) => this.setState({practiseText:responseJson, userTypedText: ''}))
+	  .then((responseJson) => this.setState({practiseText:responseJson, userTypedText: '', practiseTextHighlighted : this.greyOutString(responseJson)}))
 	  .catch((error) => console.log(error))
   }
 
   handleOnKeyDown (e) {
     let userTypedTextInput = e.target.value
+    this.setState({ userTypedText: userTypedTextInput })
     let practiseText = this.state.practiseText
     this.compareIndex = userTypedTextInput.length - 1
-    if (userTypedTextInput[this.compareIndex] !== practiseText[this.compareIndex] && this.mismatchIndex.includes(this.compareIndex) === false) {
-      this.mismatchIndex.push(this.compareIndex)
-    }
-
-    if (this.mismatchIndex[this.mismatchIndex.length - 1] > this.compareIndex) {
-      this.mismatchIndex.pop()
-    }
-
-    this.setState({ userTypedText: userTypedTextInput })
+    console.log(userTypedTextInput) 
+    this.highlightTypedLetters(this.compareIndex, userTypedTextInput, this.state.practiseText)
   }
 
-  highlightTypedLetters (practiseText, mismatchIndex, compareIndex) {
-    let practiseCharactersArray = practiseText.split('')
-    practiseCharactersArray = practiseCharactersArray.map((v, i, a) => {
-      if (mismatchIndex.includes(i)) {
-        return <span style={{color: "red"}}>{v}</span>
-      }
-      else if (i <= compareIndex) {
-        return <span style={{color: "black"}}>{a[i]}</span>
-      }
-      else if (i === compareIndex+1) {
-	return <span style={{backgroundColor: "yellow"}}> {a[i]} </span>
-      }
-      else {
-	return <span style={{color: "grey"}}> {a[i]} </span>
-      }
-    })
-    return (practiseCharactersArray)
+  greyOutString (stringToBeGreyed) {
+	  let arrayOfGreyedCharacters = stringToBeGreyed.split('').map((character) => {return <span style={{color: "grey"}}> {character} </span> })
+	  return arrayOfGreyedCharacters
+   
+  }
+  highlightTypedLetters (compareIndex, userTypedText, practiseText) {
+    console.log(compareIndex,this.compareIndex,this.state.practiseText[compareIndex],userTypedText)
+    let practiseCharactersArray = this.state.practiseTextHighlighted 
+    practiseCharactersArray[compareIndex + 2] = <span style={{color: "grey"}}> {this.state.practiseText[compareIndex + 2]} </span>
+    practiseCharactersArray[compareIndex + 1] = <span style={{backgroundColor: "yellow"}}> {this.state.practiseText[compareIndex + 1]} </span>
+    if (this.state.practiseText[compareIndex] !== userTypedText[compareIndex]) {
+    practiseCharactersArray[compareIndex] = <span style={{color: "red"}}> {this.state.practiseText[compareIndex]} </span>
+    } else {
+    practiseCharactersArray[compareIndex] = <span style={{color: "black"}}> {this.state.practiseText[compareIndex]} </span>
+    }  
+		  
+    if (this.state.practiseText[compareIndex - 1] !== userTypedText[compareIndex - 1]) {
+    practiseCharactersArray[compareIndex - 1] = <span style={{color: "red"}}> {this.state.practiseText[compareIndex - 1]} </span>
+    } else {
+    practiseCharactersArray[compareIndex - 1] = <span style={{color: "black"}}> {this.state.practiseText[compareIndex - 1]} </span>
+    }  
+    this.setState({practiseTextHighlighted: practiseCharactersArray})
   }
 
   componentWillMount() { 
@@ -111,8 +111,8 @@ class TypingTutor extends Component {
         <br />
 
         <div id='practiseTextUnrendered'>
-          {this.highlightTypedLetters(this.state.practiseText, this.mismatchIndex, this.compareIndex)}
-        </div>
+		{this.state.practiseTextHighlighted} 
+	</div>
 	<br />
 	<hr />
 
