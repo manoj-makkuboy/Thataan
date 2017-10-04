@@ -12,6 +12,7 @@ class TypingTutor extends Component {
     this.state = { practiseText: '', userTypedText: '', level: '', practiseTextHighlighted : [] }
     this.mismatchIndex = []
     this.compareIndex = -1
+    this.practiseData = ''
   }
 
   setUpKeymanInUserText () {
@@ -48,12 +49,16 @@ class TypingTutor extends Component {
     let userInput = e.target.value
     this.setState({ level: userInput})
     let fetchUrl = 'http://localhost:5000/practise_data/' + e.target.value + '/'
-    fetch(fetchUrl, {mode: 'cors', headers: {
+    fetch(fetchUrl, {headers: {
       'Accept': 'application/json',
       'Content-type': 'application/json'
     }})
 	  .then((response) => response.json())
-	  .then((responseJson) => this.setState({practiseText:responseJson, userTypedText: '', practiseTextHighlighted : this.greyOutString(responseJson)}))
+	  .then((responseJson) => {
+	    this.practiseData = responseJson.split('\n')
+	    return this.practiseData	  
+	    })
+	  .then((practiseData) => this.setState({practiseText:practiseData[0] , userTypedText: '', practiseTextHighlighted : this.greyOutString(practiseData[0])}))
 	  .catch((error) => console.log(error))
   }
 
@@ -104,6 +109,15 @@ class TypingTutor extends Component {
 		    <option value='1'> level 1</option>
 		    <option value='2'> level 2</option>
 		    <option value='3'> level 3</option>
+		    <option value='4'> level 4</option>
+		    <option value='5'> level 5</option>
+		    <option value='6'> level 6</option>
+		    <option value='7'> level 7</option>
+		    <option value='8'> level 8</option>
+		    <option value='9'> level 9</option>
+		    <option value='10'> level 10</option>
+		    <option value='11'> level 11</option>
+		    <option value='12'> level 12</option>
 	    </select>
 	<br />
 	
