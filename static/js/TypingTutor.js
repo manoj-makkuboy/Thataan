@@ -12,7 +12,8 @@ class TypingTutor extends Component {
     this.state = { practiseText: '', userTypedText: '', level: '', practiseTextHighlighted : [] }
     this.mismatchIndex = []
     this.compareIndex = -1
-    this.practiseData = ''
+    this.practiseData = [] 
+    this.currentPractiseLine = 0
   }
 
   setUpKeymanInUserText () {
@@ -39,7 +40,6 @@ class TypingTutor extends Component {
   handleInputChangeUserTypedText (e) {
     let userTypedTextInput = e.target.value
     this.setState({ userTypedText: userTypedTextInput })
-	  console.log('onchange')
   }
 
   handleLevelChange (e) {
@@ -67,8 +67,21 @@ class TypingTutor extends Component {
     this.setState({ userTypedText: userTypedTextInput })
     let practiseText = this.state.practiseText
     this.compareIndex = userTypedTextInput.length - 1
-    console.log(userTypedTextInput) 
     this.highlightTypedLetters(this.compareIndex, userTypedTextInput, this.state.practiseText)
+	
+    if (this.isEndOfPractiseText (userTypedTextInput, this.state.practiseText)) {
+      this.setState({practiseText:this.practiseData[1], userTypedText: ''}) 
+    }
+          
+  }
+  
+  isEndOfPractiseText (userTypedText, practiseText) {
+    if (userTypedText.length === practiseText.length) {
+      return true
+    } else {
+      return false 
+    } 
+     
   }
 
   greyOutString (stringToBeGreyed) {
@@ -96,7 +109,6 @@ class TypingTutor extends Component {
   }
 
   componentWillMount() { 
-   console.log('componentWillMount') 
 	  //	this.setUpKeymanInUserText ()
 }
   render () {
@@ -109,15 +121,6 @@ class TypingTutor extends Component {
 		    <option value='1'> level 1</option>
 		    <option value='2'> level 2</option>
 		    <option value='3'> level 3</option>
-		    <option value='4'> level 4</option>
-		    <option value='5'> level 5</option>
-		    <option value='6'> level 6</option>
-		    <option value='7'> level 7</option>
-		    <option value='8'> level 8</option>
-		    <option value='9'> level 9</option>
-		    <option value='10'> level 10</option>
-		    <option value='11'> level 11</option>
-		    <option value='12'> level 12</option>
 	    </select>
 	<br />
 	
