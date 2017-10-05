@@ -46,7 +46,7 @@ class TypingTutor extends Component {
 
     let userInput = e.target.value
     this.setState({ level: userInput})
-    let fetchUrl = 'http://localhost:5000/practise_data/' + e.target.value + '/'
+    let fetchUrl = '/practise_data/' + e.target.value + '/'
     fetch(fetchUrl, {headers: {
       'Accept': 'application/json',
       'Content-type': 'application/json'

@@ -10,7 +10,6 @@ import jwt
 from functools import wraps
 from os import environ, path
 from flask import Flask, render_template, send_from_directory
-from flask_webpack import Webpack
 
 app = Flask(__name__, static_folder="./static/dist", template_folder="./static")
 app.debug = True
