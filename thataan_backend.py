@@ -34,7 +34,7 @@ app.config.from_envvar('THATAAN_SETTINGS', silent=True)
 def index():
     return app.send_static_file("index.html")
 
-@app.route('/dist/bundle.js')
+@app.route('/bundle.js')
 def send_bundle():
     return app.send_static_file('dist/bundle.js')
 
