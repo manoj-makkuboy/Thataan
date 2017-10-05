@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import KeyBoard from './KeyBoard'
 import KeyBoardv2 from './KeyBoardv2'
 import './TypingTutor.css'
 
