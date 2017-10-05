@@ -34,9 +34,9 @@ app.config.from_envvar('THATAAN_SETTINGS', silent=True)
 def index():
     return app.send_static_file("index.html")
 
-@app.route('/<path:path>')
-def send_js(path):
-    return app.send_static_file(path)
+@app.route('/dist/bundle.js')
+def send_bundle():
+    return app.send_static_file('dist/bundle.js')
 
 def connect_db():
     """ connects to specific database """
