@@ -1,4 +1,6 @@
 from flask import Flask, request, session, g, redirect, url_for, abort, flash
+from flask import send_from_directory
+
 import datetime
 from flask_cors import CORS
 import os
@@ -11,10 +13,9 @@ from functools import wraps
 from os import environ, path
 from flask import Flask, render_template, send_from_directory
 
-app = Flask(__name__, static_folder="./static/dist", template_folder="./static")
+app = Flask(__name__, static_folder="./static")
 app.debug = True
 app.config.from_object(__name__)
-CORS(app)
 
 here = path.abspath(path.dirname(__name__))
 
@@ -24,7 +25,7 @@ here = path.abspath(path.dirname(__name__))
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    return app.send_static_file("index.html")
 
 app.config.update(dict(
     DATABASE=os.path.join(app.root_path, 'thantaan.db'),
@@ -34,6 +35,9 @@ app.config.from_envvar('THATAAN_SETTINGS', silent=True)
 
 
 
+@app.route('/dist/<path:path>')
+def send_js(path):
+    return send_from_directory('dist', path)
 
 def connect_db():
     """ connects to specific database """
