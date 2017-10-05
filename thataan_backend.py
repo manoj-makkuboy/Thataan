@@ -13,7 +13,7 @@ from functools import wraps
 from os import environ, path
 from flask import Flask, render_template, send_from_directory
 
-app = Flask(__name__, static_folder="./static")
+app = Flask(__name__, static_url_path='', static_folder="./static")
 app.debug = True
 app.config.from_object(__name__)
 
@@ -23,9 +23,6 @@ here = path.abspath(path.dirname(__name__))
 # app.config["WEBPACK_MANIFEST_PATH"] = path.join(here, "manifest.json")
 # webpack.init_app(app)
 
-@app.route("/")
-def index():
-    return app.send_static_file("index.html")
 
 app.config.update(dict(
     DATABASE=os.path.join(app.root_path, 'thantaan.db'),
@@ -33,11 +30,13 @@ app.config.update(dict(
     ))
 app.config.from_envvar('THATAAN_SETTINGS', silent=True)
 
+@app.route("/")
+def index():
+    return app.send_static_file("index.html")
 
-
-@app.route('/dist/<path:path>')
+@app.route('/<path:path>')
 def send_js(path):
-    return send_from_directory('dist', path)
+    return app.send_static_file(path)
 
 def connect_db():
     """ connects to specific database """
