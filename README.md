@@ -1,6 +1,6 @@
 # Thataan - தட்டான்
 
-One Paragraph of project description goes here
+Typing tutor for tamil99 keyboard layout.
 
 ## Getting Started
 
