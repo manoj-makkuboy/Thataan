@@ -4,10 +4,10 @@ Typing tutor for tamil99 keyboard layout.
 
 ## Screenshots
 
-
-## Getting Started
 ![Screenshot 1](https://github.com/manoj-makkuboy/Thataan/blob/master/screenshots/screenshot1.png?raw=true)
 ![Screenshot 2](https://github.com/manoj-makkuboy/Thataan/blob/master/screenshots/screenshot2.png?raw=true)
+
+## Getting Started
 
 Local environment setup:
 
