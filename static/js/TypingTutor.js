@@ -6,7 +6,7 @@ class TypingTutor extends Component {
   constructor () {
     super()
     this.handleInputChangeUserTypedText = this.handleInputChangeUserTypedText.bind(this)
-    this.handleOnKeyDown = this.handleOnKeyDown.bind(this)
+    this.handleOnKeyUp = this.handleOnKeyDown.bind(this)
     this.handleLevelChange = this.handleLevelChange.bind(this)
     this.state = { practiseText: '', userTypedText: '', level: '', practiseTextHighlighted : [] }
     this.compareIndex = -1
@@ -15,7 +15,6 @@ class TypingTutor extends Component {
   }
 
   setUpKeymanInUserText () {
-	
     var kmw = require('./static/js/keyman/keymanweb')
  
     window.addEventListener('load', function () {
@@ -28,7 +27,6 @@ class TypingTutor extends Component {
     name: 'Tamil99',           // The keyboard's user-readable name.
     language:{
       id:'tam',               // A three-letter code uniquely identifying the language.
-                              // Please refer to the ISO-639 standard as necessary.
       name:'Tamil'          // The language's name.
     },
     filename:require('./tamil99.js')}); // A valid path to the compiled *.js file representing the keyboard. 
@@ -59,7 +57,7 @@ class TypingTutor extends Component {
 	  .catch((error) => console.log(error))
   }
 
-  handleOnKeyDown (e) {
+  handleOnKeyUp (e) {
     let userTypedTextInput = e.target.value
     this.setState({ userTypedText: userTypedTextInput })
     let practiseText = this.state.practiseText
@@ -67,13 +65,12 @@ class TypingTutor extends Component {
     this.highlightTypedLetters(this.compareIndex, userTypedTextInput, this.state.practiseText)
 	
     if (this.isEndOfPractiseText (userTypedTextInput, this.state.practiseText)) {
-	   this.currentPractiseLine += 1 
-	    this.setState({practiseText:this.practiseData[this.currentPractiseLine],
-		    userTypedText: '',
-		    practiseTextHighlighted: this.greyOutString(this.practiseData[this.currentPractiseLine]) } ) 
+      this.currentPractiseLine += 1 
+      this.setState({practiseText:this.practiseData[this.currentPractiseLine],
+      userTypedText: '',
+      practiseTextHighlighted: this.greyOutString(this.practiseData[this.currentPractiseLine]) } ) 
       this.compareIndex = -1
     }
-          
   }
   
   isEndOfPractiseText (userTypedText, practiseText) {
@@ -90,6 +87,7 @@ class TypingTutor extends Component {
 	  return arrayOfGreyedCharacters
    
   }
+
   highlightTypedLetters (compareIndex, userTypedText, practiseText) {
     let practiseCharactersArray = this.state.practiseTextHighlighted 
     practiseCharactersArray[compareIndex + 2] = <span style={{color: "grey"}}> {this.state.practiseText[compareIndex + 2]} </span>
@@ -110,7 +108,8 @@ class TypingTutor extends Component {
 
   componentWillMount() { 
 	  //	this.setUpKeymanInUserText ()
-}
+  }
+
   render () {
     return (
       <div id='typingTutor'>
@@ -140,7 +139,7 @@ class TypingTutor extends Component {
 	</div>
 
 	<div id='userTextDiv'>
-        <input placeholder='Type Here' id='userText'  type='text' name='userTypedText' value={this.state.userTypedText} onChange={this.handleInputChangeUserTypedText} onKeyUp={this.handleOnKeyDown} />
+        <input placeholder='Type Here' id='userText'  type='text' name='userTypedText' value={this.state.userTypedText} onChange={this.handleInputChangeUserTypedText} onKeyUp={this.handleOnKeyUp} />
 	<br />
 	</div>
 
