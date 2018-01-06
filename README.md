@@ -15,7 +15,7 @@ Local environment setup:
    > $ npm install
 2. Bundle the js files using webpack
    > $ node webpack --progress -d --config src/static/webpack.config.js
-3. Install python packages using pip
+3. Install python packages using pipenv
    > $ pipenv install 
 4. Get into pipenv environment and run gunicorn server
    > $ pipenv shell
