@@ -13,18 +13,19 @@ Local environment setup:
 
 1. Install node packages using npm
    > $ npm install
-2. Install python packages using pip
-   > $ pip install -r requirements.txt
-3. Bundle the js files using webpack
-   > $ node webpack --progress -d --config src/static/webpack.config.jsj
-4. Start gunicorn server
-   > gunicorn thataan_backend:app
+2. Bundle the js files using webpack
+   > $ node webpack --progress -d --config src/static/webpack.config.js
+3. Install python packages using pip
+   > $ pipenv install 
+4. Get into pipenv environment and run gunicorn server
+   > $ pipenv shell
+   > $ gunicorn thataan_backend:app
 
 
 ### Prerequisites
 
-- Python3
-- Node
+- Python3 + pipenv
+- Node + npm
 
 
 ## Contributing
