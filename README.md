@@ -19,6 +19,7 @@ Local environment setup:
    > $ pipenv install 
 4. Get into pipenv environment and run gunicorn server
    > $ pipenv shell
+   
    > $ gunicorn thataan_backend:app
 
 
