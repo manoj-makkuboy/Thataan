@@ -1,21 +1,25 @@
-#practiseTextUnrendered {
+.practiseTextRenderedDiv, .practiseTextUnrenderedDiv {
+  text-align: center
 }
-
-#practiseTextRendered {
+#practiseTextRendered, #practiseTextUnrendered {
+  margin: auto;
+  text-align: left;
+  width: 780px;
 }
 
 #userTextDiv {
+  position: relative;
+  top: 40px;
+  text-align: center;
 }
 
 #userText {
-   margin: auto; 
-   width: 83%;
-   left: 0%;
+  width: 780px;
 }
 
 #typingTutor {
-    margin: auto;
-    width: 100%;
-    border: 3px solid green;
-    padding: 10px;
+  margin: auto;
+  width: 100%;
+  border: 3px solid green;
+  padding: 10px;
 }

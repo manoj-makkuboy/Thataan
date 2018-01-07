@@ -27877,7 +27877,8 @@ var TypingTutor = function (_Component) {
             id: 'tam', // A three-letter code uniquely identifying the language.
             name: 'Tamil' // The language's name.
           },
-          filename: __webpack_require__(189) }); // A valid path to the compiled *.js file representing the keyboard.
+          filename: __webpack_require__(189)
+        }); // A valid path to the compiled *.js file representing the keyboard.
       });
     }
   }, {
@@ -27896,10 +27897,12 @@ var TypingTutor = function (_Component) {
       var userInput = e.target.value;
       this.setState({ level: userInput });
       var fetchUrl = '/practise_data/' + e.target.value + '/';
-      fetch(fetchUrl, { headers: {
+      fetch(fetchUrl, {
+        headers: {
           'Accept': 'application/json',
           'Content-type': 'application/json'
-        } }).then(function (response) {
+        }
+      }).then(function (response) {
         return response.json();
       }).then(function (responseJson) {
         _this2.practiseData = responseJson.split('\n');
@@ -27926,9 +27929,11 @@ var TypingTutor = function (_Component) {
 
       if (this.isEndOfPractiseText(userTypedTextInput, this.state.practiseText)) {
         this.currentPractiseLine += 1;
-        this.setState({ practiseText: this.practiseData[this.currentPractiseLine],
+        this.setState({
+          practiseText: this.practiseData[this.currentPractiseLine],
           userTypedText: '',
-          practiseTextHighlighted: this.greyOutString(this.practiseData[this.currentPractiseLine]) });
+          practiseTextHighlighted: this.greyOutString(this.practiseData[this.currentPractiseLine])
+        });
         this.compareIndex = -1;
       }
     }
@@ -28058,13 +28063,16 @@ var TypingTutor = function (_Component) {
         _react2.default.createElement('br', null),
         _react2.default.createElement(
           'div',
-          { id: 'practiseTextUnrendered' },
-          this.state.practiseTextHighlighted
+          { className: 'practiseTextUnrenderedDiv' },
+          _react2.default.createElement(
+            'div',
+            { id: 'practiseTextUnrendered' },
+            this.state.practiseTextHighlighted
+          )
         ),
-        _react2.default.createElement('hr', null),
         _react2.default.createElement(
           'div',
-          null,
+          { className: 'practiseTextRenderedDiv' },
           _react2.default.createElement(
             'div',
             { id: 'practiseTextRendered' },
@@ -28157,7 +28165,7 @@ var keyMap = {
   'c80': { english: ['p'], tamil: [['ண', ''], [']']] },
   'c219': { english: ['['], tamil: [['ச', ''], ['{']] },
   'c221': { english: [']'], tamil: [['ஞ', ''], ['}']] },
-  // asdfg row 
+  // asdfg row
   'c65': { english: ['a'], tamil: [['அ', '', ''], ['௹']] },
   'c83': { english: ['s'], tamil: [['இ', 'ி', ''], ['௺']] },
   'c68': { english: ['d'], tamil: [['உ', 'ு', ''], ['௸']] },
@@ -28200,7 +28208,7 @@ function getKeyIdAndLayer(inputLetter, language) {
 
 function removeHighlight(keyIdToRemoveHightlight) {
   var elementToReset = window.document.getElementsByClassName(keyIdToRemoveHightlight);
-  var elementsArray = (0, _from2.default)(elementToReset); // make array out of html collection	
+  var elementsArray = (0, _from2.default)(elementToReset); // make array out of html collection
   elementsArray.map(function (element) {
     element.removeAttribute('style');
   });
@@ -28208,7 +28216,7 @@ function removeHighlight(keyIdToRemoveHightlight) {
 
 function addHighlight(keyIdToAddHightlight) {
   var elementToHighlight = window.document.getElementsByClassName(keyIdToAddHightlight);
-  var elementsArray = (0, _from2.default)(elementToHighlight); // make array out of html collection	
+  var elementsArray = (0, _from2.default)(elementToHighlight); // make array out of html collection
   elementsArray.map(function (element) {
     element.setAttribute('style', 'background: #34f3cf;');
   });
@@ -28222,7 +28230,7 @@ var KeyBoardv2 = function (_Component) {
 
     var _this = (0, _possibleConstructorReturn3.default)(this, (KeyBoardv2.__proto__ || (0, _getPrototypeOf2.default)(KeyBoardv2)).call(this));
 
-    _this.state = { keyIdToPress: '', keyboardLayerId: 0 // default layer 0, shift layer is 1 
+    _this.state = { keyIdToPress: '', keyboardLayerId: 0 // default layer 0, shift layer is 1
     };return _this;
   }
 
@@ -28246,7 +28254,7 @@ var KeyBoardv2 = function (_Component) {
 
         if (keyIdAndLayerToAddHighlight['layerId']) {
           // If layerId is not 0 highlight shift
-          addHighlight('c16'); // c16 - keyId of shift	
+          addHighlight('c16'); // c16 - keyId of shift
         } else {
           removeHighlight('c16');
         }
@@ -28267,7 +28275,7 @@ var KeyBoardv2 = function (_Component) {
             _react2.default.createElement(
               'span',
               null,
-              keyMap[keyId]['english'][0][0]
+              keyMap[keyId][currentKeyboard][0][1]
             ),
             _react2.default.createElement(
               'span',
@@ -28289,7 +28297,7 @@ var KeyBoardv2 = function (_Component) {
             _react2.default.createElement(
               'span',
               null,
-              keyMap[keyId]['english'][0][0]
+              keyMap[keyId][currentKeyboard][0][1]
             ),
             _react2.default.createElement(
               'span',
@@ -28312,7 +28320,7 @@ var KeyBoardv2 = function (_Component) {
             _react2.default.createElement(
               'span',
               null,
-              keyMap[keyId]['english'][0][0]
+              keyMap[keyId][currentKeyboard][0][1]
             ),
             _react2.default.createElement(
               'span',
@@ -29238,7 +29246,7 @@ exports = module.exports = __webpack_require__(94)(undefined);
 
 
 // module
-exports.push([module.i, "#practiseTextUnrendered {\n}\n\n#practiseTextRendered {\n}\n\n#userTextDiv {\n}\n\n#userText {\n   margin: auto; \n   width: 83%;\n   left: 0%;\n}\n\n#typingTutor {\n    margin: auto;\n    width: 100%;\n    border: 3px solid green;\n    padding: 10px;\n}\n", ""]);
+exports.push([module.i, ".practiseTextRenderedDiv, .practiseTextUnrenderedDiv {\n  text-align: center\n}\n#practiseTextRendered, #practiseTextUnrendered {\n  margin: auto;\n  text-align: left;\n  width: 780px;\n}\n\n#userTextDiv {\n  position: relative;\n  top: 40px;\n  text-align: center;\n}\n\n#userText {\n  width: 780px;\n}\n\n#typingTutor {\n  margin: auto;\n  width: 100%;\n  border: 3px solid green;\n  padding: 10px;\n}\n", ""]);
 
 // exports
 

@@ -3,7 +3,7 @@ import KeyBoardv2 from './KeyBoardv2'
 import './TypingTutor.css'
 
 class TypingTutor extends Component {
-  constructor () {
+  constructor() {
     super()
     this.handleInputChangeUserTypedText = this.handleInputChangeUserTypedText.bind(this)
     this.handleOnKeyDown = this.handleOnKeyDown.bind(this)
@@ -14,10 +14,10 @@ class TypingTutor extends Component {
     this.currentPractiseLine = 0
   }
 
-  setUpKeymanInUserText () {
+  setUpKeymanInUserText() {
     var kmw = require('./static/js/keyman/keymanweb')
     window.addEventListener('load', function () {
-      kmw.init({attachType: 'manual'})
+      kmw.init({ attachType: 'manual' })
       kmw.attachToControl(document.getElementById('userText'))
 
       kmw.osk.hide()
@@ -28,35 +28,38 @@ class TypingTutor extends Component {
           id: 'tam',               // A three-letter code uniquely identifying the language.
           name: 'Tamil'          // The language's name.
         },
-        filename: require('./tamil99.js')}) // A valid path to the compiled *.js file representing the keyboard.
+        filename: require('./tamil99.js')
+      }) // A valid path to the compiled *.js file representing the keyboard.
     })
   }
 
-  handleInputChangeUserTypedText (e) {
+  handleInputChangeUserTypedText(e) {
     let userTypedTextInput = e.target.value
     this.setState({ userTypedText: userTypedTextInput })
   }
 
-  handleLevelChange (e) {
+  handleLevelChange(e) {
     this.compareIndex = -1
 
     let userInput = e.target.value
-    this.setState({level: userInput})
+    this.setState({ level: userInput })
     let fetchUrl = '/practise_data/' + e.target.value + '/'
-    fetch(fetchUrl, {headers: {
-      'Accept': 'application/json',
-      'Content-type': 'application/json'
-    }})
-  .then((response) => response.json())
-  .then((responseJson) => {
-    this.practiseData = responseJson.split('\n')
-    return this.practiseData
-  })
-  .then((practiseData) => this.setState({practiseText: practiseData[0], userTypedText: '', practiseTextHighlighted: this.greyOutString(practiseData[0])}))
-  .catch((error) => console.log(error))
+    fetch(fetchUrl, {
+      headers: {
+        'Accept': 'application/json',
+        'Content-type': 'application/json'
+      }
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        this.practiseData = responseJson.split('\n')
+        return this.practiseData
+      })
+      .then((practiseData) => this.setState({ practiseText: practiseData[0], userTypedText: '', practiseTextHighlighted: this.greyOutString(practiseData[0]) }))
+      .catch((error) => console.log(error))
   }
 
-  handleOnKeyDown (e) {
+  handleOnKeyDown(e) {
     if (e.keyCode === 8) { // condition to check if the input is backspace and prevent it
       e.preventDefault()
       return
@@ -66,17 +69,19 @@ class TypingTutor extends Component {
     let practiseText = this.state.practiseText
     this.compareIndex = userTypedTextInput.length - 1
     this.highlightTypedLetters(this.compareIndex, userTypedTextInput, this.state.practiseText)
-	
-    if (this.isEndOfPractiseText (userTypedTextInput, this.state.practiseText)) {
-      this.currentPractiseLine += 1 
-      this.setState({practiseText:this.practiseData[this.currentPractiseLine],
-      userTypedText: '',
-      practiseTextHighlighted: this.greyOutString(this.practiseData[this.currentPractiseLine]) } ) 
+
+    if (this.isEndOfPractiseText(userTypedTextInput, this.state.practiseText)) {
+      this.currentPractiseLine += 1
+      this.setState({
+        practiseText: this.practiseData[this.currentPractiseLine],
+        userTypedText: '',
+        practiseTextHighlighted: this.greyOutString(this.practiseData[this.currentPractiseLine])
+      })
       this.compareIndex = -1
     }
   }
 
-  isEndOfPractiseText (userTypedText, practiseText) {
+  isEndOfPractiseText(userTypedText, practiseText) {
     if (userTypedText.length === practiseText.length) {
       return true
     } else {
@@ -84,33 +89,33 @@ class TypingTutor extends Component {
     }
   }
 
-  greyOutString (stringToBeGreyed) {
-    let arrayOfGreyedCharacters = stringToBeGreyed.split('').map((character) => { return <span style={{color: 'grey'}}> {character} </span> })
+  greyOutString(stringToBeGreyed) {
+    let arrayOfGreyedCharacters = stringToBeGreyed.split('').map((character) => { return <span style={{ color: 'grey' }}> {character} </span> })
     return arrayOfGreyedCharacters
   }
 
-  highlightTypedLetters (compareIndex, userTypedText, practiseText) {
+  highlightTypedLetters(compareIndex, userTypedText, practiseText) {
     let practiseCharactersArray = this.state.practiseTextHighlighted
-    practiseCharactersArray[compareIndex + 2] = <span style={{color: 'grey'}}> {this.state.practiseText[compareIndex + 2]} </span>
-    practiseCharactersArray[compareIndex + 1] = <span style={{backgroundColor: 'yellow'}}> {this.state.practiseText[compareIndex + 1]} </span>
+    practiseCharactersArray[compareIndex + 2] = <span style={{ color: 'grey' }}> {this.state.practiseText[compareIndex + 2]} </span>
+    practiseCharactersArray[compareIndex + 1] = <span style={{ backgroundColor: 'yellow' }}> {this.state.practiseText[compareIndex + 1]} </span>
     if (this.state.practiseText[compareIndex] !== userTypedText[compareIndex]) {
-      practiseCharactersArray[compareIndex] = <span style={{color: 'red'}}> {this.state.practiseText[compareIndex]} </span>
+      practiseCharactersArray[compareIndex] = <span style={{ color: 'red' }}> {this.state.practiseText[compareIndex]} </span>
     } else {
-      practiseCharactersArray[compareIndex] = <span style={{color: 'gcblack'}}> {this.state.practiseText[compareIndex]} </span>
+      practiseCharactersArray[compareIndex] = <span style={{ color: 'gcblack' }}> {this.state.practiseText[compareIndex]} </span>
     }
     if (this.state.practiseText[compareIndex - 1] !== userTypedText[compareIndex - 1]) {
-      practiseCharactersArray[compareIndex - 1] = <span style={{color: 'red'}}> {this.state.practiseText[compareIndex - 1]} </span>
+      practiseCharactersArray[compareIndex - 1] = <span style={{ color: 'red' }}> {this.state.practiseText[compareIndex - 1]} </span>
     } else {
-      practiseCharactersArray[compareIndex - 1] = <span style={{color: 'black'}}> {this.state.practiseText[compareIndex - 1]} </span>
+      practiseCharactersArray[compareIndex - 1] = <span style={{ color: 'black' }}> {this.state.practiseText[compareIndex - 1]} </span>
     }
-    this.setState({practiseTextHighlighted: practiseCharactersArray})
+    this.setState({ practiseTextHighlighted: practiseCharactersArray })
   }
 
-  componentWillMount () {
+  componentWillMount() {
     // this.setUpKeymanInUserText ()
   }
 
-  render () {
+  render() {
     return (
       <div id='typingTutor'>
         <label> Level </label>
@@ -124,26 +129,27 @@ class TypingTutor extends Component {
         <label> Practise Text: </label>
         <br />
 
-        <div id='practiseTextUnrendered'>
-		{this.state.practiseTextHighlighted} 
-	</div>
-        <hr />
-        <div>
+        <div className='practiseTextUnrenderedDiv'>
+          <div id='practiseTextUnrendered'>
+            {this.state.practiseTextHighlighted}
+          </div>
+        </div>
+        <div className='practiseTextRenderedDiv'>
           <div id='practiseTextRendered'>
             {this.state.practiseText}
           </div>
-	</div>
+        </div>
 
-	<div id='userTextDiv'>
-  <input placeholder='Type Here' id='userText' type='text' name='userTypedText' value={this.state.userTypedText} onChange={this.handleInputChangeUserTypedText} onKeyDown={this.handleOnKeyDown} />
-	<br />
-	</div>
+        <div id='userTextDiv'>
+          <input placeholder='Type Here' id='userText' type='text' name='userTypedText' value={this.state.userTypedText} onChange={this.handleInputChangeUserTypedText} onKeyDown={this.handleOnKeyDown} />
+          <br />
+        </div>
 
         <br />
         <br />
-      <div>
-        <KeyBoardv2 pressedKey={this.state.practiseText[this.state.userTypedText.length]} />
-      </div>
+        <div>
+          <KeyBoardv2 pressedKey={this.state.practiseText[this.state.userTypedText.length]} />
+        </div>
       </div>
     )
   }
