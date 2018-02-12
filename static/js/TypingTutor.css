@@ -1,10 +1,17 @@
 .practiseTextRenderedDiv, .practiseTextUnrenderedDiv {
   text-align: center
 }
-#practiseTextRendered, #practiseTextUnrendered {
+#practiseTextRendered {
   margin: auto;
   text-align: left;
   width: 780px;
+}
+
+#practiseTextUnrendered {
+  margin: auto;
+  text-align: left;
+  width: 780px;
+  font-size: 50px;
 }
 
 #userTextDiv {
@@ -20,6 +27,5 @@
 #typingTutor {
   margin: auto;
   width: 100%;
-  border: 3px solid green;
   padding: 10px;
 }

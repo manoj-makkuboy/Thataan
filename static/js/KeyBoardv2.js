@@ -104,19 +104,19 @@ class KeyBoardv2 extends Component {
   render() {
     let qwertyKeyIds = ['c81', 'c87', 'c69', 'c82', 'c84', 'c89', 'c85', 'c73', 'c79', 'c80', 'c219', 'c221']
     let renderedQwertyKeys = qwertyKeyIds.map((keyId, index) => {
-      return (<li><a className={"key " + keyId}><span>{keyMap[keyId][currentKeyboard][0][1]}</span><span>{keyMap[keyId][currentKeyboard][0][0]}</span></a></li>)
+      return (<li><a className={"key " + keyId}><span className='layer1'>{keyMap[keyId][currentKeyboard][0][1]}</span><span className='layer0'>{keyMap[keyId][currentKeyboard][0][0]}</span></a></li>)
     })
 
     let asdfgKeyIds = ["c65", "c83", "c68", "c70", "c71", "c72", "c74", "c75", "c76", "c186", "c222"]
     let renderedAsdfgKeys = asdfgKeyIds.map((keyId, index) => {
-      return (<li><a className={"key " + keyId}><span>{keyMap[keyId][currentKeyboard][0][1]}</span><span>{keyMap[keyId][currentKeyboard][0][0]}</span></a></li>)
+      return (<li><a className={"key " + keyId}><span className='layer1'>{keyMap[keyId][currentKeyboard][0][1]}</span><span className='layer0'>{keyMap[keyId][currentKeyboard][0][0]}</span></a></li>)
     })
 
 
     let zxcvbKeyIds = ['c90', 'c88', 'c67', 'c86', 'c66', 'c78', 'c77', 'c188', 'c190', 'c191']
 
     let renderedZxcvbKeys = zxcvbKeyIds.map((keyId, index) => {
-      return (<li><a className={"key " + keyId}><span>{keyMap[keyId][currentKeyboard][0][1]}</span><span>{keyMap[keyId][currentKeyboard][0][0]}</span></a></li>)
+      return (<li><a className={"key " + keyId}><span className='layer1'>{keyMap[keyId][currentKeyboard][0][1]}</span><span className='layer0'>{keyMap[keyId][currentKeyboard][0][0]}</span></a></li>)
     })
 
     return (

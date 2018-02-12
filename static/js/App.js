@@ -4,9 +4,6 @@ import TypingTutor from './TypingTutor'
 
 const MainTab = () => (
   <div>
-    <nav>
-      <Link to="/"> Practise </Link>
-    </nav>
     <div>
       <Route path="/" component={TypingTutor} />
     </div>
