@@ -98,3 +98,6 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# javascript
+node_modules/
