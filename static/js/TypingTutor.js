@@ -131,7 +131,7 @@ class TypingTutor extends Component {
 
         <div className='practiseTextUnrenderedDiv'>
           <div id='practiseTextUnrendered'>
-            {this.state.practiseTextHighlighted[this.compareIndex + 1]}
+            {this.state.practiseText[this.compareIndex + 1]}
           </div>
         </div>
         <div className='practiseTextRenderedDiv'>
