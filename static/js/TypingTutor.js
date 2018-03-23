@@ -114,7 +114,8 @@ class TypingTutor extends Component {
   render () {
     return (
       <div id='typingTutor'>
-	<label> Level </label>
+	    <div class="lvwpr">
+	    <label> Level </label>
 	    <select value={this.state.level} onChange={this.handleLevelChange}>
 		   
 		    <option value='' disabled defaultValue> select a level to begin </option>
@@ -122,6 +123,8 @@ class TypingTutor extends Component {
 		    <option value='2'> level 2</option>
 		    <option value='3'> level 3</option>
 	    </select>
+	    </div>
+	
 	<br />
 	
         <label> Practise Text:  </label>
