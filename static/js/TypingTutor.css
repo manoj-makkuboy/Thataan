@@ -1,31 +1,11 @@
-.practiseTextRenderedDiv, .practiseTextUnrenderedDiv {
-  text-align: center
-}
-#practiseTextRendered {
-  margin: auto;
-  text-align: left;
-  width: 780px;
-}
-
-#practiseTextUnrendered {
-  margin: auto;
-  text-align: left;
-  width: 780px;
-  font-size: 50px;
-}
-
-#userTextDiv {
-  position: relative;
-  top: 40px;
-  text-align: center;
-}
-
-#userText {
-  width: 780px;
-}
-
-#typingTutor {
-  margin: auto;
-  width: 100%;
-  padding: 10px;
-}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background-image: url(https://i1.wp.com/www.infolinkbd.com/wp-content/uploads/2015/11/Paralax-Home-Background-4.jpg?ssl=1);background-repeat: no-repeat;background-size: cover;min-height: 100vh;}
+nav{background:rgba(0, 0, 0, 0.5);padding: 20px;}
+nav a{color:#fff;}
+#typingTutor{margin: auto;width: 100%;}
+.lvwpr{background:rgba(0, 0, 0, 0.5)7;margin-top: 10px;padding: 10px 20px;}
+.lvwpr label{color: #fff;padding-right: 10px;}
+.lvwpr select{background: transparent;padding: 10px;border: 1px solid #7b7373;border-radius: 3px;color: #FFF;}
+.lvwpr select option{color:#333}
+#userText {margin: auto;width: 780px;}
+#typingTutor {margin: auto;width: 100%;padding: 10px;}
